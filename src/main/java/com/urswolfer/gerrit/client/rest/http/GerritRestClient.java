@@ -176,10 +176,10 @@ public class GerritRestClient implements RestClient {
                                  HttpVerb verb,
                                  boolean isRetry,
                                  Header... headers) throws IOException, HttpStatusException {
-        HttpContext httpContext = new BasicHttpContext();
+        HttpContext httpContext = HttpClientContext.create();
         HttpClientBuilder client = getHttpClient(httpContext);
 
-        Optional<String> gerritAuthOptional = updateGerritAuthWhenRequired(httpContext, client);
+        Optional<String> gerritAuthOptional = Optional.absent();
 
         String uri = authData.getHost();
         // only use /a when http login is required (i.e. we haven't got a gerrit-auth cookie)
